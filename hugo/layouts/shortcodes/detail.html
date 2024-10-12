@@ -1,0 +1,11 @@
+<div class="detail-where-when">
+  <div class="detail-label">Where</div>
+  <div class="detail-content">
+    <a href="{{ .Get 1 }}">{{ .Get 0 }}</a><br />
+    <a href="{{ .Get 5 }}">{{ .Get 2 }}<br />{{ .Get 3 }}<br />{{ .Get 4 }}</a>
+  </div>
+  <div class="detail-label">When</div>
+  <div class="detail-content">
+    {{ .Get 6 | safeHTML }}
+  </div>
+</div>

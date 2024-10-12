@@ -1,0 +1,30 @@
+.names {
+  font-family: Great Vibes;
+  font-weight: 400;
+}
+
+.names-amp {
+  font-size: 0.5em;
+}
+
+div.names {
+  text-align:  center;
+  font-size:   3em;
+
+  margin-top:    0.2em;
+  margin-bottom: 0.1em;
+}
+
+div.names > .names-amp {
+  display: block;
+}
+
+span.names {
+  padding-right: 0.25em;
+}
+
+span.names > .names-amp {
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  display: inline;
+}

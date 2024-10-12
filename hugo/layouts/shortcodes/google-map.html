@@ -1,0 +1,4 @@
+{{/* This absolute monstrosity brought to you by Hugo being too smart. */}}
+{{/* See: https://discourse.gohugo.io/t/url-encoding-percent-encoding-with-hugo/16546 */}}
+{{ $iframe := printf "<iframe src=\"https://www.google.com/maps/embed?pb=%s\" class=\"google-map\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>" (.Get 0) }}
+{{ $iframe | safeHTML }}

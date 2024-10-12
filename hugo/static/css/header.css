@@ -1,0 +1,48 @@
+div#menu {
+  display: flex;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-content: space-between;
+
+  /* box-sizing prevents the menu from overflowing its parent container
+   * when it has left and right padding. */
+  box-sizing: border-box;
+
+  font-family: Barlow Condensed;
+  font-size: 1.25em;
+
+  width: 100%;
+
+  border-bottom: 2px solid black;
+  border-top:    2px solid black;
+
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  margin-bottom: 1em;
+}
+
+div#pre-menu-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.25em;
+}
+
+h1 {
+  font-family: Great Vibes;
+  font-weight: 400;
+  text-align:  center;
+}
+
+h2 {
+  font-family: Great Vibes;
+  font-weight: 400;
+
+  margin-top:    1em;
+  margin-bottom: 0;
+}
+
+h1 + h2 {
+  margin-top: 0;
+}

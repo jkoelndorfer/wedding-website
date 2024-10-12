@@ -1,0 +1,17 @@
+@font-face {
+  font-family:  Great Vibes;
+  font-style:   normal;
+  font-weight:  400;
+  font-display: swap;
+
+  src: url(../fonts/GreatVibes-Regular.woff2) format("woff2");
+}
+
+@font-face {
+  font-family:  Barlow Condensed;
+  font-style:   normal;
+  font-weight:  400;
+  font-display: swap;
+
+  src: url(../fonts/BarlowCondensed-Regular.woff2) format("woff2");
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+<head>
+<title>The Koelndorfer Wedding ⸱ June 1, 2025 ⸱ {{ .Title }}</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="{{ default .Site.Params.meta.description .Description }}">
+<meta name="keywords" content="{{ default .Site.Params.meta.keywords (delimit .Keywords ", ") }}">
+
+{{ hugo.Generator }}
+{{ hugo.BuildDate }}
+{{ hugo.CommitHash }}
+
+<script type="text/javascript" src="{{ "/js/main.js" }}"></script>
+<link rel="stylesheet" href="{{ "/css/couple-photo.css" }}">
+<link rel="stylesheet" href="{{ "/css/date.css" }}">
+<link rel="stylesheet" href="{{ "/css/details.css" }}">
+<link rel="stylesheet" href="{{ "/css/fonts.css" }}">
+<link rel="stylesheet" href="{{ "/css/header.css" }}">
+<link rel="stylesheet" href="{{ "/css/layout.css" }}">
+<link rel="stylesheet" href="{{ "/css/misc.css" }}">
+<link rel="stylesheet" href="{{ "/css/names.css" }}">
+</head>
+<body lang="{{ .Site.LanguageCode }}">
+<div id="root">
+  <div id="pre-menu-header">{{ partial "names-inline.html" . }} {{ partial "date-inline.html" . }}</div>
+  {{ partial "menu.html" . }}
