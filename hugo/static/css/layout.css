@@ -12,6 +12,7 @@ div#root {
   margin-right: auto;
 
   width: 40em;
+  max-width: 80%;
 
   grid-template-columns: 1fr;
 }

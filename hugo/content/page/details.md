@@ -1,7 +1,7 @@
 +++
 title = 'Details'
 date = 2024-10-13T00:00:00-05:00
-slug = 'Details'
+url = 'details.html'
 +++
 
 Dress Code

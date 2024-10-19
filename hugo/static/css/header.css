@@ -8,7 +8,6 @@ div#menu {
   box-sizing: border-box;
 
   font-family: Barlow Condensed;
-  font-size: 1.25em;
 
   width: 100%;
 
@@ -33,6 +32,7 @@ h1 {
   font-family: Great Vibes;
   font-weight: 400;
   text-align:  center;
+  margin-top:  0;
 }
 
 h2 {

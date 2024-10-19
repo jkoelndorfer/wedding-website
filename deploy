@@ -1,0 +1,22 @@
+#!/bin/bash
+
+env=$1
+
+script_path=$(readlink -f "$0")
+script_dir=$(dirname "$script_path")
+cd "$script_dir"
+
+aws_account_id=$(aws sts get-caller-identity --query 'Account' --output text)
+
+if [[ "$env" != 'dev' ]] && [[ "$env" != 'prod' ]]; then
+  printf 'invalid environment: %s\n' "$env" >&2
+  exit 1
+fi
+
+bucket="${aws_account_id}-wedding-website-${env}"
+s3_base_path="s3://${bucket}"
+
+./build "$env"
+cd hugo/public
+
+aws s3 sync --delete . "$s3_base_path"
