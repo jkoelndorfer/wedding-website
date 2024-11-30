@@ -1,0 +1,3 @@
+[services]
+  [services.dynamodb]
+    endpoint-url = http://localhost:8000
