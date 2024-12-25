@@ -1,4 +1,4 @@
-div.couple-photo {
+div.photo {
   display:    block;
   overflow-y: clip;
 
@@ -7,7 +7,7 @@ div.couple-photo {
   border: 2px solid black;
 }
 
-div.couple-photo-container {
+div.photo-container {
   margin-left:   auto;
   margin-right:  auto;
   margin-bottom: 2em;
@@ -23,7 +23,7 @@ div.couple-photo-container {
   box-shadow: 0.75em 0.75em 1.25em #666;
 }
 
-.couple-photo img {
+.photo img {
   display:    block;
   max-width:  40vw;
 }

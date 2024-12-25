@@ -24,7 +24,9 @@ type InvitationRepository interface {
 
 type DynamoDBInvitationRepository struct {
 	dynamoDBClient      *dynamodb.Client
+	initialized         bool
 	invitationTableName string
+	localDev            bool
 }
 
 func New(lcfg rsvpconfig.RSVPConfig) *DynamoDBInvitationRepository {
@@ -32,7 +34,10 @@ func New(lcfg rsvpconfig.RSVPConfig) *DynamoDBInvitationRepository {
 
 	if lcfg.IsLocalDev() {
 		opts = append(opts, config.WithRegion("local-mock"))
-		opts = append(opts, config.WithBaseEndpoint("http://localhost:8000"))
+		dbEndpoint, overrideEndpoint := lcfg.DynamoDBEndpoint()
+		if overrideEndpoint {
+			opts = append(opts, config.WithBaseEndpoint(dbEndpoint))
+		}
 	}
 
 	cfg, err := config.LoadDefaultConfig(context.Background(), opts...)
@@ -47,12 +52,49 @@ func New(lcfg rsvpconfig.RSVPConfig) *DynamoDBInvitationRepository {
 	}
 	return &DynamoDBInvitationRepository{
 		dynamoDBClient:      dynamodb.NewFromConfig(cfg),
+		initialized:         false,
 		invitationTableName: tableName,
+		localDev:            lcfg.IsLocalDev(),
 	}
 }
 
 func (r *DynamoDBInvitationRepository) Get(invitationId model.InviteId) (model.Invitation, error) {
 	return model.Invitation{}, nil
+}
+
+func (r *DynamoDBInvitationRepository) Initialize() error {
+	if r.initialized {
+		return nil
+	}
+
+	// We don't need to perform any initialization outside local development.
+	//
+	// The table should already be created by Terraform when running in AWS.
+	if !r.localDev {
+		r.initialized = true
+		return nil
+	}
+
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(2*time.Second))
+	defer cancel()
+
+	input := dynamodb.CreateTableInput{
+		TableName: &r.invitationTableName,
+	}
+
+	r.dynamoDBClient.CreateTable(ctx, &input)
+}
+
+func (r *DynamoDBInvitationRepository) tableExists(tableName string) (bool, error) {
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(2*time.Second))
+	defer cancel()
+
+	startTableName * string = nil
+
+	input := dynamodb.ListTablesInput{
+		ExclusiveStartTableName: startTableName,
+		TableName:               &r.invitationTableName,
+	}
 }
 
 func (r *DynamoDBInvitationRepository) Load(invitations []model.Invitation) error {

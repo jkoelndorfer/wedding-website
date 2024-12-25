@@ -8,7 +8,7 @@ import (
 
 func Default(db db.InvitationRepository, r *http.Request) (int, APIResponse) {
 	return http.StatusNotFound, APIResponse{
-		Error:    APIError{Code: "not_found", Message: "the requested endpoint was not found"},
+		Error:    &APIError{Code: "not_found", Message: "the requested endpoint was not found"},
 		Response: nil,
 	}
 }

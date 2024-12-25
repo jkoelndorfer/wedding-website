@@ -8,6 +8,6 @@ import (
 
 func Lookup(db db.InvitationRepository, r *http.Request) (int, APIResponse) {
 	return http.StatusInternalServerError, APIResponse{
-		Error: APIError{Code: "not_implemented", Message: "this endpoint is not implemented"},
+		Error: &APIError{Code: "not_implemented", Message: "this endpoint is not implemented"},
 	}
 }

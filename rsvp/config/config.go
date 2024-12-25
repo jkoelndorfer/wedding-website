@@ -10,7 +10,13 @@ type RSVPConfig interface {
 	APIClientToken() (string, error)
 
 	// Returns the secret key required for specially-privileged endpoints.
-	AuthSecretKey() (string, error)
+	APISecretKey() (string, error)
+
+	// Returns the endpoint to be used for DynamoDB.
+	//
+	// If the second argument is false, the endpoint should not be changed from the
+	// default.
+	DynamoDBEndpoint() (string, bool)
 
 	// Returns true if this program is currently executing in Lambda; false otherwise.
 	InLambda() bool
@@ -52,8 +58,8 @@ func (c *StandardRSVPConfig) APIClientToken() (string, error) {
 // This is the secret key used for privileged access to the API.
 //
 // It permits loading invitation data.
-func (c *StandardRSVPConfig) AuthSecretKey() (string, error) {
-	key, present := os.LookupEnv("AUTH_SECRET_KEY")
+func (c *StandardRSVPConfig) APISecretKey() (string, error) {
+	key, present := os.LookupEnv("API_SECRET_KEY")
 
 	if !present {
 		return "", errors.New("authorization key not set in environment")
@@ -64,6 +70,13 @@ func (c *StandardRSVPConfig) AuthSecretKey() (string, error) {
 	}
 
 	return key, nil
+}
+
+// Returns the configured DynamoDB endpoint to use.
+//
+// If the second argument is false, no override should be used.
+func (c *StandardRSVPConfig) DynamoDBEndpoint() (string, bool) {
+	return os.LookupEnv("DYNAMODB_ENDPOINT")
 }
 
 // Indicates whether the RSVP application is running in AWS Lambda.

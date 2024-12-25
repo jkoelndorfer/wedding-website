@@ -30,6 +30,11 @@ p {
   margin-bottom: 0.5em;
 }
 
+div.center {
+  margin-left:  auto;
+  margin-right: auto;
+}
+
 p > span.names {
   line-height: normal;
 }

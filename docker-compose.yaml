@@ -1,14 +1,22 @@
 ---
 
 services:
+  hugo:
+    image: hugomods/hugo:std-exts-0.140.1
+    command: hugo server --baseURL http://localhost --bind 0.0.0.0
+    ports:
+      - 1313:1313
+    volumes:
+      - ./hugo:/hugo
+    working_dir: /hugo
+
   dynamodb:
     image:   amazon/dynamodb-local:2.5.3
-    command: "-jar /home/dynamodblocal/DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data"
+    command: "-jar /home/dynamodblocal/DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal"
     ports:
       - 8000:8000
-    volumes:
-      - ./localdev/dynamodb:/home/dynamodblocal/data
-    working_dir: /home/dynamodblocal/data
+    networks:
+      app:
 
   rsvp:
     image: golang:1.23-bookworm
@@ -20,14 +28,20 @@ services:
       - gopath:/go
     working_dir: /app
     environment:
-      API_CLIENT_TOKEN: LOCAL_DEV_ONLY_cddfdfecd70f74a344691214047d5f8acc_LOCAL_DEV_ONLY
-      API_SECRET_KEY:   LOCAL_DEV_ONLY_de1b1a3cdbacf260de3c1c28da86ae9e5b_LOCAL_DEV_ONLY
+      AWS_ACCESS_KEY_ID:          FAKELOCALDEVONLY
+      AWS_SECRET_ACCESS_KEY:      FAKELOCALDEVONLY
+      API_CLIENT_TOKEN:           LOCAL_DEV_ONLY_cddfdfecd70f74a344691214047d5f8acc_LOCAL_DEV_ONLY
+      API_SECRET_KEY:             LOCAL_DEV_ONLY_de1b1a3cdbacf260de3c1c28da86ae9e5b_LOCAL_DEV_ONLY
+      RSVP_LISTEN_ADDRESS:        "0.0.0.0:9000"
+      DYNAMODB_ENDPOINT:          http://dynamodb:8000
       DYNAMODB_INVITATIONS_TABLE: WeddingInvitations
-      RSVP_LISTEN_ADDRESS: "0.0.0.0:9000"
-    develop:
-      watch:
-        - action: restart
-          path:   ./rsvp
+    networks:
+      app:
+    depends_on:
+      - dynamodb
+
+networks:
+  app:
 
 volumes:
   gopath:

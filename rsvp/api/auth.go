@@ -25,7 +25,7 @@ func (s *AuthenticationService) APIClientTokenValid(token string) bool {
 
 // Returns true if the given API secret key is valid; false otherwise.
 func (s *AuthenticationService) APISecretKeyValid(key string) bool {
-	actual_key, err := s.configuration.AuthSecretKey()
+	actual_key, err := s.configuration.APISecretKey()
 
 	if err != nil {
 		return false
