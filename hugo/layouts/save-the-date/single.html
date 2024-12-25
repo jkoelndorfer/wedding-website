@@ -1,0 +1,11 @@
+{{ partial "header.html" . }}
+<body lang="{{ .Site.LanguageCode }}">
+<div id="root">
+<h1>Come Celebrate With Us!</h1>
+{{ partial "photo.html" (dict "Photo" "img/engagement-photo.jpg") }}
+{{ partial "names-block.html" . }}
+<section class="marriage-tagline">
+  say "I do"
+</section>
+<div class="date">on Sunday, June 1, 2025<br />in Minneapolis, Minnesota</div>
+{{ partial "footer.html" . }}

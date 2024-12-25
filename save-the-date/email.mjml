@@ -1,0 +1,23 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Great Vibes" href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" />
+    <mj-style>
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#ffffff">
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="32px" align="center" color="#000000" font-family="Great Vibes, Helvetica">Come Celebrate With Us!</mj-text>
+        <mj-image width="300px" src="https://dev.koelndorfer.wedding/img/engagement-photo.jpg" />
+        <mj-text font-size="20px" padding-bottom="3px" align="center" font-family="Great Vibes, Helvetica">John Koelndorfer</mj-text>
+        <mj-text font-size="12px" padding-top="0px" padding-bottom="0px" align="center" font-family="Great Vibes, Helvetica">&</mj-text>
+        <mj-text font-size="20px" padding-top="3px" align="center" font-family="Great Vibes, Helvetica">Val Rucker</mj-text>
+        <mj-text font-size="20px" padding-top="2px" padding-bottom="2px" align="center" font-family="Great Vibes, Helvetica">exchange vows</mj-text>
+        <mj-text font-size="20px" align="center" line-height="1.25" font-family="Great Vibes, Helvetica">
+          on Sunday, June 1, 2025<br />
+          in Minneapolis, Minnesota
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

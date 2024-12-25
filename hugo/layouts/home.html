@@ -1,8 +1,9 @@
 {{ partial "header.html" . }}
+{{ partial "body-start.html" . }}
 <h1>The Koelndorfer Wedding</h1>
 {{ partial "photo.html" (dict "Photo" "img/couple-photo.jpg") }}
 {{ partial "names-block.html" . }}
-<section id="marriage-tagline">
+<section id="marriage-tagline" class="marriage-tagline">
   say "I do"
 </section>
 <div class="date">on Sunday, June 1, 2025</section>
