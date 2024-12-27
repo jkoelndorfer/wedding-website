@@ -8,3 +8,8 @@ email/node_modules
 # Use `npx mjml /path/to/email.mjml -o /path/to/email.html` to create
 # the HTML files for sending.
 email/**/*.html
+
+# File containing email environment variables.
+#
+# Don't commit these!
+email/env

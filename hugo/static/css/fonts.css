@@ -15,3 +15,7 @@
 
   src: url(../fonts/BarlowCondensed-Regular.woff2) format("woff2");
 }
+
+.script-font {
+  font-family: "Great Vibes";
+}
