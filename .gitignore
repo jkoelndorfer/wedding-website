@@ -1,2 +1,10 @@
 hugo/public
 hugo/.hugo_build.lock
+
+email/node_modules
+
+# The raw email files are .mjml.
+#
+# Use `npx mjml /path/to/email.mjml -o /path/to/email.html` to create
+# the HTML files for sending.
+email/**/*.html
