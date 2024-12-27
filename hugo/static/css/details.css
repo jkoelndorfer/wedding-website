@@ -2,10 +2,10 @@
   display: inline-grid;
   grid-template-columns: 1fr 2fr;
 
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 
-  max-width: 250px;
+  max-width: 40rem;
 }
 
 .detail-where-when + p {

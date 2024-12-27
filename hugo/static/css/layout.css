@@ -1,7 +1,16 @@
+/* See:
+ * https://stackoverflow.com/questions/11799236/should-i-use-px-or-rem-value-units-in-my-css
+ */
+
+:root {
+  font-size: 62.5%;
+}
+
 body {
   display: flex;
   justify-content: center;
 
+  font-size:   1.6rem;
   font-family: Barlow Condensed;
 }
 
@@ -11,30 +20,42 @@ div#root {
   margin-left: auto;
   margin-right: auto;
 
-  width: 40em;
-  max-width: 80%;
+  width: 60rem;
 
   grid-template-columns: 1fr;
 }
 
 h1 + p {
-  margin-top: 0em;
+  margin-top: 0;
+}
+
+.big-text {
+  font-size: 3rem;
+}
+
+.centered {
+  margin-left:  auto;
+  margin-right: auto;
+  text-align:   center;
+}
+
+.google-map {
+  margin-top: 2.5rem;
 }
 
 p {
   text-align:   justify;
   text-justify: auto;
-  line-height:  1.75em;
+  line-height:  2.5rem;
 
-  margin-top:    0.5em;
-  margin-bottom: 0.5em;
+  margin-top:    0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-div.center {
-  margin-left:  auto;
-  margin-right: auto;
-}
-
-p > span.names {
+p > div .names {
   line-height: normal;
+}
+
+.names-amp {
+  font-size: 0.5em;
 }

@@ -11,7 +11,7 @@
     <mj-section>
       <mj-column>
         <mj-text font-size="28px" align="center" color="#000000">Come Celebrate With Us!</mj-text>
-        <mj-image alt="Photo of John & Val" width="300px" border="2px solid black" padding="0px 0px" src="https://dev.koelndorfer.wedding/img/engagement-photo.jpg" />
+        <mj-image alt="Photo of John & Val" width="300px" border="2px solid black" padding="0px 0px" src="https://koelndorfer.wedding/img/engagement-photo.jpg" />
         <mj-text font-size="20px" padding-bottom="3px" align="center">John Koelndorfer</mj-text>
         <mj-text font-size="12px" padding-top="0px" padding-bottom="0px" align="center">&</mj-text>
         <mj-text font-size="20px" padding-top="3px" align="center">Val Rucker</mj-text>
