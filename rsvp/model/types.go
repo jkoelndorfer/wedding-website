@@ -30,7 +30,7 @@ type Invitation struct {
 	// The unique identifier of the invite.
 	//
 	// Users will use this identifier to look their invitation up.
-	Id InviteId `json:"id" dyanamodbav:"InviteId,string"`
+	Id InviteId `json:"id" dynamodbav:"InviteId,string"`
 
 	// The salutation text of the invitation, sans-comma.
 	//

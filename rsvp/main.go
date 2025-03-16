@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc("/", api.RequestHandler(cfg, invRepository))
 
 	logger := log.Logger()
+
 	if cfg.InLambda() {
 		logger.Printf("running in Lambda mode")
 		lambda.Start(httpadapter.New(http.DefaultServeMux).ProxyWithContext)
