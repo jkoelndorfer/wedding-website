@@ -13,3 +13,6 @@ email/**/*.html
 #
 # Don't commit these!
 email/env
+
+email/*.log
+email/*.list.txt
