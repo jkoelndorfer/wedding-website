@@ -31,15 +31,16 @@ func RequestHandler(cfg config.RSVPConfig, invitationRepository db.InvitationRep
 
 		passedDB = invitationRepository
 
-		if r.RequestURI == "/lookup" {
+		reqPath := r.URL.Path
+		if reqPath == "/lookup" {
 			// Look up an invitation and return information about it.
 			handler = Lookup
 			privilegedEndpoint = false
-		} else if r.RequestURI == "/respond" {
+		} else if reqPath == "/respond" {
 			// Allow a user to reply to their invitation.
 			handler = Respond
 			privilegedEndpoint = false
-		} else if r.RequestURI == "/load" {
+		} else if reqPath == "/load" {
 			// Allow invitation information to be uploaded.
 			//
 			// This requires special authentication.

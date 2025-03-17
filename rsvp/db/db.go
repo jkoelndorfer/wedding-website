@@ -18,7 +18,7 @@ import (
 var logger = log.Logger()
 
 type InvitationRepository interface {
-	Get(model.InviteId) (model.Invitation, error)
+	Get(model.InviteId) (*model.Invitation, error)
 	Load([]model.Invitation) error
 	Put(model.Invitation) error
 	PutResponse(model.InvitationResponse) error
@@ -67,8 +67,25 @@ func New(lcfg rsvpconfig.RSVPConfig) *DynamoDBInvitationRepository {
 	return repository
 }
 
-func (r *DynamoDBInvitationRepository) Get(invitationId model.InviteId) (model.Invitation, error) {
-	return model.Invitation{}, nil
+func (r *DynamoDBInvitationRepository) Get(invitationId model.InviteId) (*model.Invitation, error) {
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(3*time.Second))
+	defer cancel()
+
+	consistentRead := true
+	getItemInput := dynamodb.GetItemInput{
+		TableName: &r.invitationTableName,
+		Key: map[string]types.AttributeValue{
+			"InviteId": &types.AttributeValueMemberS{Value: string(invitationId)},
+		},
+		ConsistentRead: &consistentRead,
+	}
+	output, err := r.dynamoDBClient.GetItem(ctx, &getItemInput)
+	if err != nil {
+		return nil, err
+	}
+	invitation := model.Invitation{}
+	attributevalue.UnmarshalMap(output.Item, &invitation)
+	return &invitation, nil
 }
 
 func (r *DynamoDBInvitationRepository) Initialize() error {
