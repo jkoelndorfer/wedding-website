@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Script to look up an invite from the local DynamoDB instance.
+
+invite_id=$1
+
+if [[ -z "$invite_id" ]]; then
+	printf 'expected invite ID as first argument\n' >&2
+	exit 1
+fi
+
+key_json=$(jq --arg invite_id "$invite_id" -n -c '{"InviteId": {"S": $invite_id}}')
+aws dynamodb get-item \
+	--region mock-region \
+	--endpoint-url 'http://localhost:8000' \
+	--table-name 'WeddingInvitations' \
+	--key "$key_json"
+
+# vim: ft=bash
