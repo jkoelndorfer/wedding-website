@@ -17,21 +17,21 @@ import (
 
 var logger = log.Logger()
 
-type InvitationRepository interface {
-	Get(model.InviteId) (*model.Invitation, error)
-	Load([]model.Invitation) error
-	Put(model.Invitation) error
-	PutResponse(model.InvitationResponse) error
+type InviteRepository interface {
+	Get(model.InviteId) (*model.Invite, error)
+	Load([]model.Invite) error
+	Put(model.Invite) error
+	PutResponse(model.InviteResponse) error
 }
 
-type DynamoDBInvitationRepository struct {
-	dynamoDBClient      *dynamodb.Client
-	initialized         bool
-	invitationTableName string
-	localDev            bool
+type DynamoDBInviteRepository struct {
+	dynamoDBClient  *dynamodb.Client
+	initialized     bool
+	inviteTableName string
+	localDev        bool
 }
 
-func New(lcfg rsvpconfig.RSVPConfig) *DynamoDBInvitationRepository {
+func New(lcfg rsvpconfig.RSVPConfig) *DynamoDBInviteRepository {
 	opts := make([]func(*config.LoadOptions) error, 0, 8)
 
 	if lcfg.IsLocalDev() {
@@ -45,37 +45,37 @@ func New(lcfg rsvpconfig.RSVPConfig) *DynamoDBInvitationRepository {
 	cfg, err := config.LoadDefaultConfig(context.Background(), opts...)
 
 	if err != nil {
-		logger.Fatalf("failed to load AWS default configuration for InvitationRepository: %v", err)
+		logger.Fatalf("failed to load AWS default configuration for InviteRepository: %v", err)
 	}
 
-	tableName, err := lcfg.InvitationsDynamoTable()
+	tableName, err := lcfg.InvitesDynamoTable()
 	if err != nil {
-		logger.Fatalf("unable to determine DynamoDB table for invitations: %v", err)
+		logger.Fatalf("unable to determine DynamoDB table for invites: %v", err)
 	}
 
 	logger.Printf("using dynamoDB client with config: %v", cfg)
-	repository := &DynamoDBInvitationRepository{
-		dynamoDBClient:      dynamodb.NewFromConfig(cfg),
-		initialized:         false,
-		invitationTableName: tableName,
-		localDev:            lcfg.IsLocalDev(),
+	repository := &DynamoDBInviteRepository{
+		dynamoDBClient:  dynamodb.NewFromConfig(cfg),
+		initialized:     false,
+		inviteTableName: tableName,
+		localDev:        lcfg.IsLocalDev(),
 	}
 	err = repository.Initialize()
 	if err != nil {
-		logger.Fatalf("failed initializing invitation repository: %v", err)
+		logger.Fatalf("failed initializing invite repository: %v", err)
 	}
 	return repository
 }
 
-func (r *DynamoDBInvitationRepository) Get(invitationId model.InviteId) (*model.Invitation, error) {
+func (r *DynamoDBInviteRepository) Get(inviteId model.InviteId) (*model.Invite, error) {
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(3*time.Second))
 	defer cancel()
 
 	consistentRead := true
 	getItemInput := dynamodb.GetItemInput{
-		TableName: &r.invitationTableName,
+		TableName: &r.inviteTableName,
 		Key: map[string]types.AttributeValue{
-			"InviteId": &types.AttributeValueMemberS{Value: string(invitationId)},
+			"InviteId": &types.AttributeValueMemberS{Value: string(inviteId)},
 		},
 		ConsistentRead: &consistentRead,
 	}
@@ -83,12 +83,12 @@ func (r *DynamoDBInvitationRepository) Get(invitationId model.InviteId) (*model.
 	if err != nil {
 		return nil, err
 	}
-	invitation := model.Invitation{}
-	attributevalue.UnmarshalMap(output.Item, &invitation)
-	return &invitation, nil
+	invite := model.Invite{}
+	attributevalue.UnmarshalMap(output.Item, &invite)
+	return &invite, nil
 }
 
-func (r *DynamoDBInvitationRepository) Initialize() error {
+func (r *DynamoDBInviteRepository) Initialize() error {
 	if r.initialized {
 		return nil
 	}
@@ -100,16 +100,16 @@ func (r *DynamoDBInvitationRepository) Initialize() error {
 		r.initialized = true
 		return nil
 	}
-	logger.Printf("preparing to initialize invitation repository")
+	logger.Printf("preparing to initialize invite repository")
 
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(5*time.Second))
 	defer cancel()
 
-	tableActive, err := r.tableIsActive(ctx, r.invitationTableName)
+	tableActive, err := r.tableIsActive(ctx, r.inviteTableName)
 	// The invitiatons table has already been created. No need to try
 	// creating it again.
 	if tableActive {
-		logger.Printf("invitation repository already initalized; nothing to do")
+		logger.Printf("invite repository already initalized; nothing to do")
 		r.initialized = true
 		return nil
 	}
@@ -117,7 +117,7 @@ func (r *DynamoDBInvitationRepository) Initialize() error {
 	inviteIdAttrName := "InviteId"
 	var capacity int64 = 1024
 	input := dynamodb.CreateTableInput{
-		TableName: &r.invitationTableName,
+		TableName: &r.inviteTableName,
 		AttributeDefinitions: []types.AttributeDefinition{
 			{
 				AttributeName: &inviteIdAttrName,
@@ -146,16 +146,16 @@ func (r *DynamoDBInvitationRepository) Initialize() error {
 	for !tableActive {
 		select {
 		case <-ctx.Done():
-			return fmt.Errorf("invitations table did not initialize in before deadline")
+			return fmt.Errorf("invites table did not initialize in before deadline")
 		default:
-			tableActive, err = r.tableIsActive(ctx, r.invitationTableName)
+			tableActive, err = r.tableIsActive(ctx, r.inviteTableName)
 		}
 	}
 
 	return nil
 }
 
-func (r *DynamoDBInvitationRepository) tableIsActive(ctx context.Context, tableName string) (bool, error) {
+func (r *DynamoDBInviteRepository) tableIsActive(ctx context.Context, tableName string) (bool, error) {
 	describeTableInput := dynamodb.DescribeTableInput{TableName: &tableName}
 
 	output, err := r.dynamoDBClient.DescribeTable(ctx, &describeTableInput)
@@ -166,8 +166,8 @@ func (r *DynamoDBInvitationRepository) tableIsActive(ctx context.Context, tableN
 	return output.Table.TableStatus == "ACTIVE", nil
 }
 
-func (r *DynamoDBInvitationRepository) Load(invitations []model.Invitation) error {
-	for _, inv := range invitations {
+func (r *DynamoDBInviteRepository) Load(invites []model.Invite) error {
+	for _, inv := range invites {
 		err := r.Put(inv)
 		if err != nil {
 			return err
@@ -176,29 +176,29 @@ func (r *DynamoDBInvitationRepository) Load(invitations []model.Invitation) erro
 	return nil
 }
 
-func (r *DynamoDBInvitationRepository) Put(invitation model.Invitation) error {
+func (r *DynamoDBInviteRepository) Put(invite model.Invite) error {
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(2*time.Second))
 	defer cancel()
 
-	av, err := attributevalue.MarshalMap(invitation)
+	av, err := attributevalue.MarshalMap(invite)
 	if err != nil {
 		return err
 	}
 
 	// See https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/dynamodb#PutItemInput
 	putItemInput := dynamodb.PutItemInput{
-		TableName: &r.invitationTableName,
+		TableName: &r.inviteTableName,
 		Item:      av,
 	}
-	logger.Printf("putting item with TableName %v and item %v", r.invitationTableName, putItemInput.Item)
+	logger.Printf("putting item with TableName %v and item %v", r.inviteTableName, putItemInput.Item)
 	_, err = r.dynamoDBClient.PutItem(ctx, &putItemInput)
 
 	return err
 }
 
-func (r *DynamoDBInvitationRepository) PutResponse(invitationResponse model.InvitationResponse) error {
+func (r *DynamoDBInviteRepository) PutResponse(inviteResponse model.InviteResponse) error {
 	return nil
 }
 
-// Ensure DynamoDBInvitiationRepository implements the InvitationRepository interface.
-var _ InvitationRepository = &DynamoDBInvitationRepository{}
+// Ensure DynamoDBInvitiationRepository implements the InviteRepository interface.
+var _ InviteRepository = &DynamoDBInviteRepository{}

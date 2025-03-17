@@ -13,7 +13,7 @@ key_json=$(jq --arg invite_id "$invite_id" -n -c '{"InviteId": {"S": $invite_id}
 aws dynamodb get-item \
 	--region mock-region \
 	--endpoint-url 'http://localhost:8000' \
-	--table-name 'WeddingInvitations' \
+	--table-name 'WeddingInvites' \
 	--key "$key_json"
 
 # vim: ft=bash

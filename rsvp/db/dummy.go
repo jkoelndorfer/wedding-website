@@ -6,28 +6,28 @@ import (
 	"github.com/jkoelndorfer/wedding-website/rsvp/model"
 )
 
-type DummyInvitationRepository struct{}
+type DummyInviteRepository struct{}
 
 func dummyErr() error {
 	return errors.New("this is a dummy repository")
 }
 
-func NewDummy() *DummyInvitationRepository {
-	return &DummyInvitationRepository{}
+func NewDummy() *DummyInviteRepository {
+	return &DummyInviteRepository{}
 }
 
-func (d *DummyInvitationRepository) Get(invitation model.InviteId) (model.Invitation, error) {
-	return model.Invitation{}, dummyErr()
+func (d *DummyInviteRepository) Get(invite model.InviteId) (model.Invite, error) {
+	return model.Invite{}, dummyErr()
 }
 
-func (d *DummyInvitationRepository) Load(invitations []model.Invitation) error {
+func (d *DummyInviteRepository) Load(invite []model.Invite) error {
 	return dummyErr()
 }
 
-func (d *DummyInvitationRepository) Put(invitation model.Invitation) error {
+func (d *DummyInviteRepository) Put(invite model.Invite) error {
 	return dummyErr()
 }
 
-func (d *DummyInvitationRepository) PutResponse(inviteResponse model.InvitationResponse) error {
+func (d *DummyInviteRepository) PutResponse(inviteResponse model.InviteResponse) error {
 	return dummyErr()
 }

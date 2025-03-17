@@ -9,10 +9,10 @@ import (
 )
 
 type LookupResponse struct {
-	Invite *model.Invitation `json:"invitation"`
+	Invite *model.Invite `json:"invite"`
 }
 
-func Lookup(db db.InvitationRepository, r *http.Request) (int, APIResponse) {
+func Lookup(db db.InviteRepository, r *http.Request) (int, APIResponse) {
 	queryParams := r.URL.Query()
 	inviteId := queryParams.Get("invite_id")
 

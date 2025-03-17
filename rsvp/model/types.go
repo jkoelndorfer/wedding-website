@@ -7,7 +7,7 @@ import (
 // See https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue#Marshal
 // for information about dynamodbav struct tgs.
 
-// The data type representing an invitation ID.
+// The data type representing an invite ID.
 type InviteId string
 
 // The data type representing an invited person's ID.
@@ -25,32 +25,32 @@ type InvitedPerson struct {
 	Plus bool `json:"plus"`
 }
 
-// Data structure representing an invitation.
-type Invitation struct {
+// Data structure representing an invite.
+type Invite struct {
 	// The unique identifier of the invite.
 	//
-	// Users will use this identifier to look their invitation up.
+	// Users will use this identifier to look their invite up.
 	Id InviteId `json:"id" dynamodbav:"InviteId,string"`
 
-	// The salutation text of the invitation, sans-comma.
+	// The salutation text of the invite, sans-comma.
 	//
 	// For example, "Dear John & Jane Doe".
 	Salutation string `json:"salutation" dynamodbav:",string"`
 
-	// The people who are invited as part of this invitation.
+	// The people who are invited as part of this invite.
 	Invitees []InvitedPerson `json:"invitees"`
 
-	// Whether the invitation includes the ceremony.
+	// Whether the invite includes the ceremony.
 	CeremonyInvite bool `json:"ceremony_invite" dynamodbav:",bool"`
 
-	// Whether the invitation includes the reception.
+	// Whether the invite includes the reception.
 	ReceptionInvite bool `json:"reception_invite" dynamodbav:",bool"`
 
-	// The number of additional guests allowed with this invitation.
+	// The number of additional guests allowed with this invite.
 	Plus int `json:"plus" dynamodbav:",number"`
 }
 
-// Data structure representing an invitation response for a single
+// Data structure representing an invite response for a single
 // InvitedPerson.
 type IndividualResponse struct {
 	// The ID of the InvitedPerson that this response corresponds with.
@@ -63,11 +63,11 @@ type IndividualResponse struct {
 	AttendingReception bool `json:"attending_reception"`
 }
 
-type InvitationResponse struct {
-	// The invitation that this response corresponds to.
-	Invite *Invitation
+type InviteResponse struct {
+	// The invite that this response corresponds to.
+	Invite *Invite
 
-	// The invitation ID that this response corresponds to.
+	// The invite ID that this response corresponds to.
 	InviteId InviteId `json:"invite_id" dynamodbav:",string"`
 
 	// The time that the response was submitted.

@@ -16,7 +16,7 @@ import (
 
 func main() {
 	cfg := config.New()
-	var invRepository db.InvitationRepository = db.New(cfg)
+	var invRepository db.InviteRepository = db.New(cfg)
 	http.HandleFunc("/", api.RequestHandler(cfg, invRepository))
 
 	logger := log.Logger()

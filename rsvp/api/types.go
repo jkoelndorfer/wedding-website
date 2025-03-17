@@ -7,7 +7,7 @@ import (
 )
 
 // Signature for a standard RSVP handler function.
-type HandlerFunction func(db.InvitationRepository, *http.Request) (statusCode int, response APIResponse)
+type HandlerFunction func(db.InviteRepository, *http.Request) (statusCode int, response APIResponse)
 
 // Data structure representing an error from the API.
 type APIError struct {

@@ -24,8 +24,8 @@ type RSVPConfig interface {
 	// Returns true if this program is currently executing in a local development context; false otherwise.
 	IsLocalDev() bool
 
-	// Returns the name of the DynamoDB table that invitations and responses are stored in.
-	InvitationsDynamoTable() (string, error)
+	// Returns the name of the DynamoDB table that invites and responses are stored in.
+	InvitesDynamoTable() (string, error)
 
 	// Returns the address that this service should bind to.
 	ListenAddress() string
@@ -57,7 +57,7 @@ func (c *StandardRSVPConfig) APIClientToken() (string, error) {
 
 // This is the secret key used for privileged access to the API.
 //
-// It permits loading invitation data.
+// It permits loading invite data.
 func (c *StandardRSVPConfig) APISecretKey() (string, error) {
 	key, present := os.LookupEnv("API_SECRET_KEY")
 
@@ -91,11 +91,11 @@ func (c *StandardRSVPConfig) IsLocalDev() bool {
 	return !c.InLambda()
 }
 
-func (c *StandardRSVPConfig) InvitationsDynamoTable() (string, error) {
-	tableName, valueSet := os.LookupEnv("DYNAMODB_INVITATIONS_TABLE")
+func (c *StandardRSVPConfig) InvitesDynamoTable() (string, error) {
+	tableName, valueSet := os.LookupEnv("DYNAMODB_INVITES_TABLE")
 
 	if !valueSet {
-		return "", errors.New("DYNAMODB_INVITATIONS_TABLE not set in environment")
+		return "", errors.New("DYNAMODB_INVITES_TABLE not set in environment")
 	}
 
 	return tableName, nil

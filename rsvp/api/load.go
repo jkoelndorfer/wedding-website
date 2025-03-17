@@ -10,10 +10,10 @@ import (
 	"github.com/jkoelndorfer/wedding-website/rsvp/model"
 )
 
-// Data structure representing a request to load invitation data.
+// Data structure representing a request to load invite data.
 type LoadRequest struct {
-	// Invitations to be loaded.
-	Invitations []model.Invitation `json:"invitations"`
+	// Invites to be loaded.
+	Invites []model.Invite `json:"invites"`
 }
 
 // Data structure representing a response from the load endpoint.
@@ -21,7 +21,7 @@ type LoadResponse struct {
 	Message string
 }
 
-func Load(db db.InvitationRepository, r *http.Request) (int, APIResponse) {
+func Load(db db.InviteRepository, r *http.Request) (int, APIResponse) {
 	requestBody, err := io.ReadAll(r.Body)
 	if err != nil {
 		return http.StatusInternalServerError, APIResponse{
@@ -29,7 +29,7 @@ func Load(db db.InvitationRepository, r *http.Request) (int, APIResponse) {
 		}
 	}
 
-	loadRequest := &LoadRequest{Invitations: make([]model.Invitation, 128)}
+	loadRequest := &LoadRequest{Invites: make([]model.Invite, 128)}
 	err = json.Unmarshal(requestBody, &loadRequest)
 	if err != nil {
 		return http.StatusBadRequest, APIResponse{
@@ -37,7 +37,7 @@ func Load(db db.InvitationRepository, r *http.Request) (int, APIResponse) {
 		}
 	}
 
-	err = db.Load(loadRequest.Invitations)
+	err = db.Load(loadRequest.Invites)
 
 	if err != nil {
 		return http.StatusInternalServerError, APIResponse{

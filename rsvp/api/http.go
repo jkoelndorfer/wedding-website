@@ -15,7 +15,7 @@ var defaultHeaders = map[string]string{
 
 var logger = log.Logger()
 
-func RequestHandler(cfg config.RSVPConfig, invitationRepository db.InvitationRepository) func(http.ResponseWriter, *http.Request) {
+func RequestHandler(cfg config.RSVPConfig, inviteRepository db.InviteRepository) func(http.ResponseWriter, *http.Request) {
 	authenticationService := NewAuthenticationService(cfg)
 
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -23,25 +23,25 @@ func RequestHandler(cfg config.RSVPConfig, invitationRepository db.InvitationRep
 			w.Header().Add(k, v)
 		}
 
-		var passedDB db.InvitationRepository
+		var passedDB db.InviteRepository
 		var handler HandlerFunction
 		var statusCode int
 		var response APIResponse
 		var privilegedEndpoint bool
 
-		passedDB = invitationRepository
+		passedDB = inviteRepository
 
 		reqPath := r.URL.Path
 		if reqPath == "/lookup" {
-			// Look up an invitation and return information about it.
+			// Look up an invite and return information about it.
 			handler = Lookup
 			privilegedEndpoint = false
 		} else if reqPath == "/respond" {
-			// Allow a user to reply to their invitation.
+			// Allow a user to reply to their invite.
 			handler = Respond
 			privilegedEndpoint = false
 		} else if reqPath == "/load" {
-			// Allow invitation information to be uploaded.
+			// Allow invite information to be uploaded.
 			//
 			// This requires special authentication.
 			handler = Load
