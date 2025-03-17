@@ -1,0 +1,20 @@
+#!/bin/bash
+
+endpoint=$1
+shift
+
+script_path=$(readlink -f "$0")
+script_dir=$(dirname "$script_path")
+docker_compose_path="${script_dir}/docker-compose.yaml"
+
+API_CLIENT_TOKEN=$(yq -r '.services.rsvp.environment.API_CLIENT_TOKEN' < "$docker_compose_path")
+API_SECRET_KEY=$(yq -r '.services.rsvp.environment.API_SECRET_KEY' < "$docker_compose_path")
+RSVP_PORT=$(yq -r '.services.rsvp.ports[0]' < "$docker_compose_path" | awk -F: '{ print $1 }')
+
+curl \
+	-H "X-API-Client-Token: ${API_CLIENT_TOKEN}" \
+	-H "X-API-Secret-Key: ${API_SECRET_KEY}" \
+	"$@" \
+	"http://localhost:${RSVP_PORT}/${endpoint}"
+
+# vim: noet ft=bash
