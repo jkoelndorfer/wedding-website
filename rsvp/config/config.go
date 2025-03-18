@@ -35,7 +35,7 @@ type RSVPConfig interface {
 	// Returns the name of the DynamoDB table that the response log is written to.
 	//
 	// All responses are recorded in this table.
-	ResponseLogDynamoTable() (string, error)
+	InviteResponseLogDynamoTable() (string, error)
 }
 
 type StandardRSVPConfig struct{}
@@ -80,8 +80,8 @@ func (c *StandardRSVPConfig) InvitesDynamoTable() (string, error) {
 	return envOrError("DYNAMODB_INVITES_TABLE")
 }
 
-func (c *StandardRSVPConfig) ResponseLogDynamoTable() (string, error) {
-	return envOrError("DYNAMODB_RESPONSE_LOG_TABLE")
+func (c *StandardRSVPConfig) InviteResponseLogDynamoTable() (string, error) {
+	return envOrError("DYNAMODB_INVITE_RESPONSE_LOG_TABLE")
 }
 
 func (c *StandardRSVPConfig) ListenAddress() string {

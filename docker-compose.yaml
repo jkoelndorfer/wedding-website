@@ -28,13 +28,14 @@ services:
       - gopath:/go
     working_dir: /app
     environment:
-      AWS_ACCESS_KEY_ID:      FAKELOCALDEVONLY
-      AWS_SECRET_ACCESS_KEY:  FAKELOCALDEVONLY
-      API_CLIENT_TOKEN:       LOCAL_DEV_ONLY_cddfdfecd70f74a344691214047d5f8acc_LOCAL_DEV_ONLY
-      API_SECRET_KEY:         LOCAL_DEV_ONLY_de1b1a3cdbacf260de3c1c28da86ae9e5b_LOCAL_DEV_ONLY
-      RSVP_LISTEN_ADDRESS:    "0.0.0.0:9000"
-      DYNAMODB_ENDPOINT:      http://dynamodb:8000
-      DYNAMODB_INVITES_TABLE: WeddingInvites
+      AWS_ACCESS_KEY_ID:                  FAKELOCALDEVONLY
+      AWS_SECRET_ACCESS_KEY:              FAKELOCALDEVONLY
+      API_CLIENT_TOKEN:                   LOCAL_DEV_ONLY_cddfdfecd70f74a344691214047d5f8acc_LOCAL_DEV_ONLY
+      API_SECRET_KEY:                     LOCAL_DEV_ONLY_de1b1a3cdbacf260de3c1c28da86ae9e5b_LOCAL_DEV_ONLY
+      RSVP_LISTEN_ADDRESS:                "0.0.0.0:9000"
+      DYNAMODB_ENDPOINT:                  http://dynamodb:8000
+      DYNAMODB_INVITES_TABLE:             WeddingInvites
+      DYNAMODB_INVITE_RESPONSE_LOG_TABLE: WeddingInviteResponseLog
     networks:
       app:
     depends_on:
