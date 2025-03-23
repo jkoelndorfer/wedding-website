@@ -12,9 +12,11 @@ services:
 
   dynamodb:
     image:   amazon/dynamodb-local:2.5.3
-    command: "-jar /home/dynamodblocal/DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal"
+    command: "-jar /home/dynamodblocal/DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data"
     ports:
       - 8000:8000
+    volumes:
+      - ./localdev/data/dynamodblocal:/home/dynamodblocal/data
     networks:
       app:
 
