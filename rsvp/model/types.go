@@ -25,12 +25,36 @@ type InvitedPerson struct {
 	Plus bool `json:"plus"`
 }
 
+// Data structure representing an invite response for a single
+// InvitedPerson.
+type IndividualResponse struct {
+	// The ID of the InvitedPerson that this response corresponds with.
+	PersonId InvitedPersonId `json:"person_id"`
+
+	// True if this person indicates they will attend the ceremony; false otherwise.
+	AttendingCeremony bool `json:"attending_ceremony"`
+
+	// True if this person indicates they will attend the reception; false otherwise.
+	AttendingReception bool `json:"attending_reception"`
+}
+
+type InviteResponse struct {
+	// The invite ID that this response is associated with.
+	InviteId InviteId `json:"id" dynamodbav:"-"`
+
+	// The time that the response was submitted.
+	ResponseTime time.Time `json:"response_time" dynamodbav:",string"`
+
+	// Responses for each individual.
+	Response []IndividualResponse `json:"response"`
+}
+
 // Data structure representing an invite.
 type Invite struct {
 	// The unique identifier of the invite.
 	//
 	// Users will use this identifier to look their invite up.
-	Id InviteId `json:"id" dynamodbav:"InviteId,string"`
+	InviteId InviteId `json:"id" dynamodbav:"InviteId,string"`
 
 	// The salutation text of the invite, sans-comma.
 	//
@@ -48,31 +72,7 @@ type Invite struct {
 
 	// The number of additional guests allowed with this invite.
 	Plus int `json:"plus" dynamodbav:",number"`
-}
 
-// Data structure representing an invite response for a single
-// InvitedPerson.
-type IndividualResponse struct {
-	// The ID of the InvitedPerson that this response corresponds with.
-	PersonId string `json:"person_id"`
-
-	// True if this person indicates they will attend the ceremony; false otherwise.
-	AttendingCeremony bool `json:"attending_ceremony"`
-
-	// True if this person indicates they will attend the reception; false otherwise.
-	AttendingReception bool `json:"attending_reception"`
-}
-
-type InviteResponse struct {
-	// The invite that this response corresponds to.
-	Invite *Invite
-
-	// The invite ID that this response corresponds to.
-	InviteId InviteId `json:"invite_id" dynamodbav:",string"`
-
-	// The time that the response was submitted.
-	ResponseTime time.Time `json:"response_time" dynamodbav:",string"`
-
-	// Responses for each individual on the RSVP.
-	Responses []IndividualResponse `json:"responses"`
+	// The most recent response to the invite.
+	Response *InviteResponse `json:"response"`
 }

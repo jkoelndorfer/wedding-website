@@ -95,7 +95,8 @@ func (r *DynamoDBInviteRepository) Get(inviteId model.InviteId) (*model.Invite, 
 	}
 	invite := model.Invite{}
 	attributevalue.UnmarshalMap(output.Item, &invite)
-	if invite.Id == "" {
+	if invite.InviteId == "" {
+		logger.Printf("unmarshalled invite: %+v", invite)
 		return nil, fmt.Errorf("no such invite: %s", inviteId)
 	}
 	return &invite, nil
@@ -305,6 +306,52 @@ func (r *DynamoDBInviteRepository) Put(invite model.Invite) error {
 }
 
 func (r *DynamoDBInviteRepository) PutResponse(inviteResponse model.InviteResponse) error {
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(5*time.Second))
+	defer cancel()
+
+	invite, err := r.Get(inviteResponse.InviteId)
+	if err != nil {
+		return err
+	}
+
+	if !inviteResponse.ValidFor(invite) {
+		logger.Printf("invite response is not valid for invite")
+		return fmt.Errorf("invite response is not valid for invite")
+	}
+
+	responseAV, err := attributevalue.MarshalMap(inviteResponse)
+	if err != nil {
+		logger.Printf("failed marshalling inviteResponse into DynamoDB attributevalue map: %s", err.Error())
+		return err
+	}
+
+	invite.Response = &inviteResponse
+	inviteAV, err := attributevalue.MarshalMap(invite)
+	if err != nil {
+		logger.Printf("failed marshalling invite into DynamoDB attributevalue map: %s", err.Error())
+		return err
+	}
+
+	responseLogPut := dynamodb.PutItemInput{
+		TableName: &r.responseLogTableName,
+		Item:      responseAV,
+	}
+	_, err = r.dynamoDBClient.PutItem(ctx, &responseLogPut)
+	if err != nil {
+		logger.Printf("failed recording response in response log table")
+		return err
+	}
+
+	invitePut := dynamodb.PutItemInput{
+		TableName: &r.inviteTableName,
+		Item:      inviteAV,
+	}
+	_, err = r.dynamoDBClient.PutItem(ctx, &invitePut)
+
+	if err != nil {
+		logger.Printf("failed recording response in invite table")
+		return err
+	}
 	return nil
 }
 
