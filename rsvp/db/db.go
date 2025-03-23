@@ -95,6 +95,9 @@ func (r *DynamoDBInviteRepository) Get(inviteId model.InviteId) (*model.Invite, 
 	}
 	invite := model.Invite{}
 	attributevalue.UnmarshalMap(output.Item, &invite)
+	if invite.Id == "" {
+		return nil, fmt.Errorf("no such invite: %s", inviteId)
+	}
 	return &invite, nil
 }
 

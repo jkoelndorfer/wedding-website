@@ -29,6 +29,7 @@ func Lookup(db db.InviteRepository, r *http.Request) (int, APIResponse) {
 
 	invite, err := db.Get(model.InviteId(inviteId))
 	if err != nil {
+		logger.Printf("failed looking up invite %s: %s", inviteId, err.Error())
 		return http.StatusInternalServerError, APIResponse{
 			Error: &APIError{Code: "invite_lookup_error", Message: fmt.Sprintf("failed looking up invite")},
 		}
