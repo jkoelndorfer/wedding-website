@@ -35,6 +35,17 @@ type DynamoDBInviteRepository struct {
 	localDev             bool
 }
 
+// Interface to describe a basic DynamoDB client.
+//
+// A custom interface is used to facilitate a mock client being used
+// during tests.
+type DynamoDBClient interface {
+	CreateTable(ctx context.Context, params *dynamodb.CreateTableInput, optFns ...func(*dynamodb.Options)) (*dynamodb.CreateTableOutput, error)
+	DescribeTable(ctx context.Context, params *dynamodb.DescribeTableInput, optFns ...func(*dynamodb.Options)) (*dynamodb.DescribeTableOutput, error)
+	GetItem(ctx context.Context, params *dynamodb.GetItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.GetItemOutput, error)
+	PutItem(ctx context.Context, params *dynamodb.PutItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.PutItemOutput, error)
+}
+
 func New(lcfg rsvpconfig.RSVPConfig) *DynamoDBInviteRepository {
 	opts := make([]func(*config.LoadOptions) error, 0, 8)
 
