@@ -36,7 +36,7 @@ function updateMarriageTagline() {
   taglineElement.innerHTML = marriageTaglines[marriageTaglineIdx];
 }
 
-var marriageTaglineInterval = 5000;
+var marriageTaglineInterval = 2500;
 var marriageTaglineIdx = Math.floor(Math.random() * marriageTaglines.length);
 var taglineElement;
 
