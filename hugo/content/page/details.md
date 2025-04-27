@@ -11,6 +11,9 @@ The wedding dress code is come as you are.
 
 {{< names-inline >}} recommend semi-formal or cocktail attire if it suits you.
 
+
+Want to get a feel for the vibe? Check out the {{< rawhtml >}}<a href="https://www.pinterest.com/ruck0088/the-koelndorfer-wedding-2025/" target="_blank">Pinterest board</a>{{< /rawhtml >}} for the overall vision -- colors, mood, and what to expect!
+
 Ceremony
 --------
 
