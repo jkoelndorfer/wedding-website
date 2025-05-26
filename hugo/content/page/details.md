@@ -27,6 +27,12 @@ Ceremony
 There is limited capacity for guests at the ceremony venue. Your RSVP will indicate ceremony attendance
 separately from reception attendance. **Unfortunately, we cannot accommodate unplanned guests at the ceremony.**
 
+Urban Daisy has a free on-site parking lot when you enter via 16th Avenue SE. Please follow
+signs for the Main Entrance.
+
+Please note that there are multiple weddings being held at Urban Daisy on June 1.
+**Please plan to arrive promptly at 1:45pm and depart at 3:00pm.**
+
 {{< google-map "!1m18!1m12!1m3!1d2821.6190150563934!2d-93.23165512242402!3d44.992050071070096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52b32d0e042bdb53%3A0xce4e5afb27346154!2sUrban%20Daisy%20Events!5e0!3m2!1sen!2sus!4v1728943295841!5m2!1sen!2sus" >}}
 
 Reception
@@ -42,6 +48,9 @@ Reception
 When you arrive at Bear Cave Brewing, please check in with the host
 and let them know you are with the Koelndorfer wedding. You will
 receive a tap card for our group's tab.
+
+There is ample street free street parking around Bear Cave Brewing.
+You may need to park a few blocks away, however.
 
 We have reserved the Bear Cave rooftop deck for our celebration,
 weather permitting. If Minnesota weather strikes, we will move
