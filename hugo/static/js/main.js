@@ -12,22 +12,22 @@ function shuffle(a) {
 }
 
 marriageTaglines = shuffle([
-  "celebrate their love",
-  "commit to forever",
-  "do the damn thing",
-  "exchange vows",
-  "get hitched",
-  "join forces",
-  "jump the broom",
-  "light up the dance floor",
-  "live happily ever after",
-  "lock it down",
-  "make it official",
-  'say "I do!"',
-  "seal the deal",
-  "settle down",
-  "take on the world",
-  "tie the knot",
+  "celebrated their love",
+  "committed to forever",
+  "did the damn thing",
+  "exchanged vows",
+  "got hitched",
+  "joined forces",
+  "jumped the broom",
+  "lit up the dance floor",
+  "lived happily ever after",
+  "locked it down",
+  "made it official",
+  'said "I do!"',
+  "sealed the deal",
+  "settled down",
+  "took on the world",
+  "tied the knot",
 ]);
 
 
