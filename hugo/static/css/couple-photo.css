@@ -23,7 +23,7 @@ div .photo-container {
 .photo img {
   display:    block;
   max-width:  25rem;
-  max-height: 35rem;
+  max-height: 30rem;
 
   border: 2px solid black;
 }
